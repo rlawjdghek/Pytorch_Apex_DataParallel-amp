@@ -30,9 +30,9 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 
 문제는 이렇게 하면 GPU3이 메모리를 순간적으로 많이 먹게 되어 터질 위험이 있다. 하지만 가장 간편하고 빠른 방법이다. 아래 코드를 참고.
 
-[##_Image|kage@XYEgm/btq65ZuzEtA/XcLSeMY2XVGQZDqB6KVou1/img.png|alignCenter|data-origin-width="1452" data-origin-height="1556" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/2.png)
 
-[##_Image|kage@csf374/btq651slEgk/bV8P0vSHQ48Dy3qDYvgAjk/img.png|alignCenter|data-origin-width="1297" data-origin-height="1043" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/3.png)
 
 **주목할 점은 기준 0번 GPU가 더 많이 VRAM을 잡아 먹는 것과 PID가 모두 같다는 것이다.**
 
@@ -56,7 +56,7 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 
 각 GPU마다 프로세스가 독립적으로 생성되어 돌아간다고 생각하자.
 
-[##_Image|kage@FQ1h8/btq65rLDgJG/EhXEp3ov1qrfxLB3A8lSbK/img.png|alignCenter|data-origin-width="1722" data-origin-height="1736" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/4.png)
 
 **DistributedDataparallel을 사용 할 경우 반드시 알아야 할 것**
 
@@ -68,7 +68,7 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 
 **4\. world\_size는 별개이지만 GPU총 갯수를 헷갈리지 않게 하기 위해 넣는다. **
 
-[##_Image|kage@Ec7zQ/btq66UTJqju/8SiKqUJpEiSkspr58Mk2Ok/img.png|alignCenter|data-origin-width="1110" data-origin-height="938" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/5.png)
 
 결과를 보면 아까와 달리 전부다 같은 양의 메모리를 차지하는 것을 볼 수 있다. 하지만 PID는 모두 다르다. 즉, 개별적으로 실행되고 있는 코드들이다. 아까보다 훨씬 더 많은 메모리를 차지하는 것을 볼 수 있다. 
 
@@ -78,21 +78,21 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 
 **먼저 [https://github.com/NVIDIA/apex](https://github.com/NVIDIA/apex)  에서 파일들을 다 다운 받는다. 오피셜 코드에서 알려주는 **
 
-[##_Image|kage@dX8cAx/btq66v02Upm/qXNk7BYShueXXMmvaovVo1/img.png|alignCenter|data-origin-width="1483" data-origin-height="138" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/6.png)
 
 **이 명령어를 사용해도 되지만 내 경험상 이걸로 설치하면 무조건 apex폴더에 들어가서 import apex를 해야 돌아간다. 따라서 나는 그냥 압축파일을 다운로드하고 안에 내용물을 내 패키지에 그대로 집어 넣는다. 그다음 3번째 명령어 실행하면 내가 지금 짜는 코드에서 임포트가 된다.**
 
-[##_Image|kage@cGKdd0/btq66VylTSd/JJDP8p1BYSauYHNpwkVYIk/img.png|alignCenter|data-origin-width="1969" data-origin-height="1719" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/7.png)
 
 방법은 토치의 DistributeDataParallel과 같다. 무조건 local\_rank를 parser에 집어넣고 프로세스 그룹을 initialize한 다음 apex에서 DDP로 묶어준다. 실행 명령어도 토치와 같다. 
 
-[##_Image|kage@ev9QzE/btq665uiFWp/BaIAUeIF4DMi8HOZz8NOt0/img.png|alignCenter|data-origin-width="1119" data-origin-height="931" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/8.png)
 
 ### **4\. apex + amp**
 
 amp는 mixed\_precision이라는 것을 사용하여 쓸데없는 계산 량을 줄이고 성능 차이는 거의 안나게 하는 패키지.
 
-[##_Image|kage@bqvkpV/btq64wT4DYN/miXHNNmaPPuiAYiLNk9pYk/img.png|alignCenter|data-origin-width="1431" data-origin-height="1747" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/9.png)
 
 위의 코드에서 opt\_level만 바꾸면 된다. 알아본 바로는 O1을 가장 많이 쓴다고 하는데 정확히 무슨 차이가 있는지는 모르겟다. 또한 내 실험 결과에서는 O1이 기존보다 더 느리게 떳다. 
 
