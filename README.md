@@ -26,7 +26,7 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 
 아래 그림과 같다. 
 
-[##_Image|kage@b2cUiz/btq7bhgq6wh/RRuiKsFyu6QBaxt4ZCwpk0/img.png|alignCenter|data-origin-width="2114" data-origin-height="656" data-ke-mobilestyle="widthOrigin"|||_##]
+![nn](./figs/1.png)
 
 문제는 이렇게 하면 GPU3이 메모리를 순간적으로 많이 먹게 되어 터질 위험이 있다. 하지만 가장 간편하고 빠른 방법이다. 아래 코드를 참고.
 
