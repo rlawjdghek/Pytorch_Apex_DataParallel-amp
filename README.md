@@ -117,3 +117,6 @@ nn.DistDataparallel O1: 0.4 -> 3.3 -> 6.5 -> 9.6 -> 12.8
 nn.DistDataparallel O2: 0.4 -> 2.8 -> 5.5 -> 8.2 -> 10.5
 
 nn.DistDataparallel O3: 0.3 -> 2.2 -> 4.0 -> 6.0 -> 8.0
+
+
+### Apex를 사용해야 할 경우 위의 apex.zip을 다운받고 압축을 푼 디렉토리에서 작업하면 된다. 
