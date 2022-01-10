@@ -1,5 +1,5 @@
 # 구글링해도 잘 안나와 있어서 커스터마이징 된 간단한 분산처리 코드.
-
+(모델 저장이나 파라미터 변경 등의 더 자세한 내용은 다음 [글](https://rlawjdghek.github.io/pytorch%20&%20tensorflow%20&%20coding/DataParallel/) 참조. )
 ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 찾아보고 적용.
 
 먼저 정리하자면, 분산처리에는 2가지 방법이 있고 파이토치에서는 크게 DataParallel과 Distributed.DataParallel이 있다. 하지만 Distributed는 오류가 뜬다 하여 nvidia에서 제공하는 apex를 썼다. 
